@@ -16,7 +16,7 @@ router.get('/form', async(req, res, next) => {
 // author creation route
 router.post('/create', async(req, res, next) => {
     console.log('body: ' + JSON.stringify(req.body))
-    // Author.add(req.body)
+    Author.add(req.body)
     res.redirect(303, '/authors')
 })
 
