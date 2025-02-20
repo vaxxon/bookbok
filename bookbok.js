@@ -1,0 +1,36 @@
+const express = require('express'); // import express
+const handlebars = require('express-handlebars').create() // create handlebars object
+
+// import routers from routes folder
+const indexRouter = require('./routes/index') 
+const authorsRouter = require('./routes/authors')
+const booksRouter = require('./routes/books')
+
+const app = express(); // start express app
+app.engine('handlebars', handlebars.engine) // register express as the template engine
+app.set('view engine', 'handlebars') // same? idk
+const port = 3000; // add a port, not one below 1000
+
+app.use("/", indexRouter) // route the index page to a view
+app.use("/authors", authorsRouter) // route the authors/ directory to a view
+app.use("/books", booksRouter) // route the books/ directory to a view
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404);
+    res.send('<h1 style="color:orange">404 – Not Found</h1>');
+});
+
+// 500 handler
+app.use((err, req, res, next) => {
+    console.error(err.message);
+    res.type('text/plain');
+    res.status(500);
+    res.send('500 – Server Error');
+});
+
+// start server message
+app.listen(port, () => console.log(
+    `Express started on localhost:${port}. `
+    + "Press control-C to terminate."
+))
