@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const Book = require('../models/book')
+
 router.get('/', function(req, res, next) {
     const books = Book.all
     res.render('books/index', {title: 'BookBok / Books', books: books})
