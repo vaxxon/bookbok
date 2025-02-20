@@ -1,5 +1,6 @@
 const express = require('express'); // import express
 const handlebars = require('express-handlebars').create() // create handlebars object
+const bodyParser = require('body-parser')
 
 // import routers from routes folder
 const indexRouter = require('./routes/index') 
@@ -10,6 +11,7 @@ const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
 app.set('view engine', 'handlebars') // same? idk
 const port = 3000; // add a port, not one below 1000
+app.use(bodyParser.urlencoded({extended: true})) // parse that body – before the view routers!
 
 app.use("/", indexRouter) // route the index page to a view
 app.use("/authors", authorsRouter) // route the authors/ directory to a view
