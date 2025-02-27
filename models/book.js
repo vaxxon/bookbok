@@ -7,6 +7,22 @@ const books = [
 
 exports.all = books
 
+exports.upsert = (book) => {
+    if(book.id) {
+        exports.update(book)
+    } else {
+        exports.add(book)
+    }
+}
+
+exports.update = (book) => {
+    books[book.id] = book
+}
+
 exports.add = (book) => {
     books.push(book)
-} 
+}
+
+exports.get = (i) => {
+    return books[i]
+}

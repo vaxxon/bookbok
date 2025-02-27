@@ -1,11 +1,21 @@
-<form action="/books/create" role="form" method="post">
+<form action="/books/upsert" role="form" method="post">
+{{#if book}}
+    <div>
+        <h2>Editing "{{book.title}}"</h2>
+        <input type="hidden" name="id" value="{{bookIndex}}">
+    </div>
+{{/if}}
     <div>
         <label for="title">Title</label>
-        <input type="text" id="title" name="title">
+        <input type="text" id="title" name="title" {{#if book}}
+            value="{{book.title}}"
+        {{/if}}>
     </div>
     <div>
         <label for="publishingYear">Year Published</label>
-        <input type="text" id="publishingYear" name="publishingYear">
+        <input type="text" id="publishingYear" name="publishingYear" {{#if book}}
+            value="{{book.publishingYear}}"
+        {{/if}}>
     </div>
     <button type="submit">Submit</button>
 </form>
