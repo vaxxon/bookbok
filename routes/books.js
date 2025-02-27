@@ -14,9 +14,9 @@ router.get('/form', async(req, res, next) => {
 })
 
 // book creation route
-router.post('/create', async(req, res, next) => {
+router.post('/upsert', async(req, res, next) => {
     console.log('body: ' + JSON.stringify(req.body))
-    Book.add(req.body)
+    Book.upsert(req.body)
     res.redirect(303, '/books')
 })
 
