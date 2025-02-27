@@ -17,5 +17,14 @@
             value="{{book.publishingYear}}"
         {{/if}}>
     </div>
+    <div>
+        <label for="authorId">Author</label>
+        <select name="authorId" id="authorId">
+            <option disabled selected value>-- select an author --</option>
+            {{#each authors}}
+                <option value="{{@index}}">{{this.firstName}} {{this.lastName}}</option>
+            {{/each}}
+        </select>
+    </div>
     <button type="submit">Submit</button>
 </form>

@@ -2,7 +2,8 @@
 <p>Create a new book <a href="books/form">here</a>, diva!</p>
 <ul>
     {{#each books}}
-    <li>{{@index}}: {{this.title}}, published {{this.publishingYear}} - 
+    <li>
+        <a href="/books/show/{{@index}}">{{@index}}: {{this.title}}, published {{this.publishingYear}}</a> - 
         <a href="/books/edit?id={{@index}}">Edit</a>
     </li>
     {{/each}}
