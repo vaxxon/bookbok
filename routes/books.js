@@ -31,7 +31,8 @@ router.get('/edit', async(req, res, next) => {
 router.get('/show/:id', async (req, res, next) => {
     let templateVars = {
         title: "BookBok / Books",
-        book: Book.get(req.params.id)
+        book: Book.get(req.params.id),
+        bookId: req.params.id
     }
     if("authorId" in templateVars.book) {
         templateVars['author'] = Author.get(templateVars.book.authorId)
