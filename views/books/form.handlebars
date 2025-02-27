@@ -22,7 +22,9 @@
         <select name="authorId" id="authorId">
             <option disabled selected value>-- select an author --</option>
             {{#each authors}}
-                <option value="{{@index}}">{{this.firstName}} {{this.lastName}}</option>
+                <option value="{{@index}}" {{#if (and @root.book (eq @root.book.authorId @index))}}selected{{/if}}>
+                    {{this.firstName}} {{this.lastName}}
+                </option>
             {{/each}}
         </select>
     </div>
