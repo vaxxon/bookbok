@@ -20,6 +20,7 @@ router.post('/upsert', async(req, res, next) => {
     res.redirect(303, '/authors')
 })
 
+// author editing route
 router.get('/edit', async(req, res, next) => {
     let authorIndex = req.query.id;
     let author = Author.get(authorIndex);
