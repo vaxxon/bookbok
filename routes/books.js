@@ -34,8 +34,8 @@ router.get('/show/:id', async (req, res, next) => {
         book: Book.get(req.params.id),
         bookId: req.params.id
     }
-    if("authorId" in templateVars.book) {
-        templateVars['author'] = Author.get(templateVars.book.authorId)
+    if("authorIds" in templateVars.book) {
+        templateVars['authors'] = templateVars.book.authorIds.map((authorId) => Author.get(authorId))
     }
     res.render('books/show', templateVars)
 })

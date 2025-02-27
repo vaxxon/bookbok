@@ -18,11 +18,11 @@
         {{/if}}>
     </div>
     <div>
-        <label for="authorId">Author</label>
-        <select name="authorId" id="authorId">
-            <option disabled selected value>-- select an author --</option>
+        <label for="authorIds">Author(s)</label>
+        <select name="authorIds" id="authorIds" multiple>
+            <option disabled selected value>-- select author(s) --</option>
             {{#each authors}}
-                <option value="{{@index}}" {{#if (and @root.book (eq @root.book.authorId @index))}}selected{{/if}}>
+                <option value="{{@index}}" {{#if (and @root.book (in @root.book.authorIds @index))}}selected{{/if}}>
                     {{this.firstName}} {{this.lastName}}
                 </option>
             {{/each}}
