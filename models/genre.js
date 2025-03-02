@@ -1,7 +1,11 @@
 const genres = [
     {genre: "fantasy"}, 
     {genre: "sci-fi"},
-    {genre: "historical fiction"}, 
+    {genre: "historical fiction"},
+    {genre: "mystery"},
+    {genre: "graphic novel"},
+    {genre: "young adult fiction"},
+    {genre: "superhero slop"},
     {genre: "nonfiction"}
 ]
 

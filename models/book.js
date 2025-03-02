@@ -1,6 +1,6 @@
 const books = [
     {title: 'Piranesi', publishingYear: 2020, authorIds: [0, 1]},
-    {title: 'Ship of Magic', publishingYear: 1998},
+    {title: 'Ship of Magic', publishingYear: 1998, genreId: 5},
     {title: 'The Lord of the Rings', publishingYear: 1954},
     {title: 'Wicked', publishingYear: 1995}
 ]

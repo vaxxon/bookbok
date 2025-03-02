@@ -1,11 +1,11 @@
 <form action="/genres/upsert" role="form" method="post">
-{{#if genre}}
+{{#if genre}} <!-- if genre exists, use its name -->
     <div>
         <h2>Editing "{{genre.genre}}"</h2>
         <input type="hidden" name="id" value="{{genreIndex}}">
     </div>
 {{/if}}
-    <div>
+    <div> <!-- create each genre as an li -->
         <label for="genre">Genre</label>
         <input type="text" id="genre" name="genre" {{#if genre}} 
             value="{{genre.genre}}"
