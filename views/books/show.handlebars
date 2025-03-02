@@ -4,10 +4,8 @@
          {{this.firstName}} {{this.lastName}}{{#unless @last}}, {{/unless}}
     {{/each}}</p>
 {{/if}}
-{{#if genres}}
-    <p>Genre(s): {{#each genres}}
-        {{this}}{{#unless @last}}, {{/unless}}
-    {{/each}}</p>
+{{#if genre}}
+    <p>Genre: {{this.genre.genre}}</p>
 {{/if}}
 <p>Originally published in {{book.publishingYear}}</p>
 <p><a href="/books/edit?id={{bookId}}">Edit</a></p>

@@ -2,7 +2,7 @@
 <p>Create a new genre <a href="genres/form">here</a>, diva!</p>
 <ul>
     {{#each genres}}
-    <li>{{@index}}: {{this}} – 
+    <li>{{@index}}: {{this.genre}} – 
         <a href="/genres/edit?id={{@index}}">Edit</a>
     </li>
     {{/each}}

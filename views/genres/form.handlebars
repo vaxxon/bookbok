@@ -1,14 +1,14 @@
 <form action="/genres/upsert" role="form" method="post">
 {{#if genre}}
     <div>
-        <h2>Editing "{{genre}}"</h2>
+        <h2>Editing "{{genre.genre}}"</h2>
         <input type="hidden" name="id" value="{{genreIndex}}">
     </div>
 {{/if}}
     <div>
         <label for="genre">Genre</label>
         <input type="text" id="genre" name="genre" {{#if genre}} 
-            value="{{genre}}"
+            value="{{genre.genre}}"
         {{/if}}>
     </div>
     <button type="submit">Submit</button>

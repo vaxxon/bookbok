@@ -1,4 +1,9 @@
-const genres = ["fantasy", "sci-fi", "historical fiction", "nonfiction"]
+const genres = [
+    {genre: "fantasy"}, 
+    {genre: "sci-fi"},
+    {genre: "historical fiction"}, 
+    {genre: "nonfiction"}
+]
 
 exports.all = genres
 
