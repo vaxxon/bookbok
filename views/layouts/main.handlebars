@@ -10,8 +10,21 @@
       </div>
     {{/if}}
     <nav>
+      {{#if currentUser}}
+        <h2>Hello, {{currentUser.name}}.</h2>
+      {{/if}}
       <ul>
         <li><a href="/">Home</a></li>
+        {{#if currentUser}}
+          <li>
+            <form action="/users/logout" role="form" method="post">
+              <button type="submit">Logout</button>
+            </form>
+          </li>
+        {{else}}
+          <li><a href="/users/login">Login</a></li>
+          <li><a href="/users/register">Register</a></li>
+        {{/if}}
         <li><a href="/authors">Authors</a></li>
         <li><a href="/books">Books</a></li>
         <li><a href="/genres">Genres</a></li>
