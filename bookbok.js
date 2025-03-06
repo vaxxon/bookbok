@@ -31,8 +31,6 @@ const authorsRouter = require('./routes/authors')
 const booksRouter = require('./routes/books')
 const genresRouter = require('./routes/genres')
 
-// application logic
-
 const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
 app.set('view engine', 'handlebars') // same? idk
@@ -45,6 +43,15 @@ app.use(expressSession({
     saveUninitialized: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // cookies expire after 30 days
 }))
+
+// flash handler
+app.use((req, res, next) => {
+    res.locals.flash = req.session.flash // transfer cookie data to local
+    delete req.session.flash // remove data from cookie
+    next()
+})
+
+// application logic
 
 app.use("/", indexRouter) // route the index page to a view
 app.use("/authors", authorsRouter) // route the authors/ directory to a view

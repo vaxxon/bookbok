@@ -18,6 +18,12 @@ router.get('/form', async(req, res, next) => {
 router.post('/upsert', async(req, res, next) => {
     console.log('body: ' + JSON.stringify(req.body))
     Genre.upsert(req.body)
+    let createdOrUpdated = req.body.id ? 'updated' : 'created'
+    req.session.flash = {
+        type: 'info',
+        intro: 'Success!',
+        message: `The genre has been ${createdOrUpdated}.`
+    }
     res.redirect(303, '/genres')
 })
 
