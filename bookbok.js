@@ -26,6 +26,7 @@ const handlebars = require('express-handlebars').create({ // create handlebars o
 const bodyParser = require('body-parser')
 
 // import routers from routes folder
+const usersRouter = require('./routes/users')
 const indexRouter = require('./routes/index') 
 const authorsRouter = require('./routes/authors')
 const booksRouter = require('./routes/books')
@@ -43,8 +44,12 @@ app.use(expressSession({
     saveUninitialized: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // cookies expire after 30 days
 }))
+app.use((req, res, next) => {
+    res.locals.currentUser = req.session.currentUser
+    next()
+})
 
-// flash handler
+// flash handler – has to be above the router logic!
 app.use((req, res, next) => {
     res.locals.flash = req.session.flash // transfer cookie data to local
     delete req.session.flash // remove data from cookie
@@ -53,6 +58,7 @@ app.use((req, res, next) => {
 
 // application logic
 
+app.use("/users", usersRouter)
 app.use("/", indexRouter) // route the index page to a view
 app.use("/authors", authorsRouter) // route the authors/ directory to a view
 app.use("/books", booksRouter) // route the books/ directory to a view
