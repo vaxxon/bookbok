@@ -1,5 +1,5 @@
 const users = [
-    {name: 'Suzanne', email: 'user@bookbok.com', password: 'password0'}
+    {name: 'Suzanne', email: 'user@bookbok.com', password: encryptPassword('password')}
 ]
 
 var crypto = require('crypto')
