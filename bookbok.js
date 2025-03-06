@@ -1,4 +1,9 @@
+// framework setup
+
 const express = require('express'); // import express
+const cookieParser = require('cookie-parser') // before the express session!
+const expressSession = require('express-session') // after the cookie parser!
+const { credentials } = require('./config') // import config file
 const handlebars = require('express-handlebars').create({ // create handlebars object
     helpers: {
       eq: (v1, v2) => v1 == v2,
@@ -26,11 +31,20 @@ const authorsRouter = require('./routes/authors')
 const booksRouter = require('./routes/books')
 const genresRouter = require('./routes/genres')
 
+// application logic
+
 const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
 app.set('view engine', 'handlebars') // same? idk
 const port = 3000; // add a port, not one below 1000
 app.use(bodyParser.urlencoded({extended: true})) // parse that body – before the view routers!
+app.use(cookieParser(credentials.cookieSecret))
+app.use(expressSession({
+    secret: credentials.cookieSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // cookies expire after 30 days
+}))
 
 app.use("/", indexRouter) // route the index page to a view
 app.use("/authors", authorsRouter) // route the authors/ directory to a view
