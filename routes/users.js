@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const helpers = require('./helpers')
+const helpers = require('./helpers') // bring in functions stored in the helpers function
 
 const User = require('../models/user')
 
@@ -10,8 +10,9 @@ router.get('/', function(req, res, next) {
 })
 
 // registration
+
 router.get('/register', async(req, res, next) => {
-    if (helpers.isLoggedIn(req, res)) {
+    if (helpers.isLoggedIn(req, res)) { // if the user is logged in, return before rendering
         return
     }
     res.render('users/register', {title: 'BookBok / Registration'})
@@ -44,6 +45,7 @@ router.post('/register', async (req, res, next) => {
 })
 
 // login
+
 router.get('/login', async (req, res, next) => {
     if (helpers.isLoggedIn(req, res)) {
         return
