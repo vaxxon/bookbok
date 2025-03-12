@@ -22,7 +22,7 @@ router.post('/register', async (req, res, next) => {
     if (helpers.isLoggedIn(req, res)) {
         return
     }
-    console.log('body: ' + JSON.stringify(req.body))
+    // console.log('body: ' + JSON.stringify(req.body))
     const user = User.getByEmail(req.body.email)
     if (user) {
         res.render('users/register', {
@@ -57,7 +57,7 @@ router.post('/login', async(req, res, next) => {
     if (helpers.isLoggedIn(req, res)) {
         return
     }
-    console.log('body: ' + JSON.stringify(req.body))
+    // console.log('body: ' + JSON.stringify(req.body))
     const user = User.login(req.body)
     if (user) {
         req.session.currentUser = user

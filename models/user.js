@@ -23,7 +23,7 @@ exports.register = (user) => {
         salt: salt,
         encryptedPassword: encryptPassword(user.password, salt)
     }
-    console.log(JSON.stringify(new_user))
+    // console.log(JSON.stringify(new_user))
     users.push(new_user)
 }
 
