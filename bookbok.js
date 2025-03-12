@@ -1,11 +1,12 @@
 // framework setup
 
 const express = require('express'); // import express
-const cookieParser = require('cookie-parser') // before the express session!
-const expressSession = require('express-session') // after the cookie parser!
-const { credentials } = require('./config') // import config file
+const cookieParser = require('cookie-parser') // before expressSession!
+const expressSession = require('express-session') // after  cookieParser!
+const { credentials } = require('./config') // import config file. no idea why there are curly braces
+const csrf = require('csurf') // csrf token generator
 const handlebars = require('express-handlebars').create({ // create handlebars object
-    helpers: {
+    helpers: { // functions you can call in a handlebars tag thing. use Polish notation
       eq: (v1, v2) => v1 == v2,
       ne: (v1, v2) => v1 != v2,
       lt: (v1, v2) => v1 < v2,
@@ -35,7 +36,7 @@ const genresRouter = require('./routes/genres')
 const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
 app.set('view engine', 'handlebars') // same? idk
-const port = 3000; // add a port, not one below 1000
+const port = 3000; // add a port, > 1000 so you don't accidentally use a reserved one
 app.use(bodyParser.urlencoded({extended: true})) // parse that body – before the view routers!
 app.use(cookieParser(credentials.cookieSecret))
 app.use(expressSession({
@@ -46,6 +47,13 @@ app.use(expressSession({
 }))
 app.use((req, res, next) => {
     res.locals.currentUser = req.session.currentUser
+    next()
+})
+
+// csrf token handler – must be after bodyParser, cookieParser, and expressSession!
+app.use(csrf({cookie: true}))
+app.use((req, res, next) => {
+    res.locals._csrfToken = req.csrfToken()
     next()
 })
 
@@ -67,6 +75,7 @@ app.use("/genres", genresRouter) // route the genres/ directory to a view
 // 404 handler
 app.use((req, res) => {
     res.status(404);
+    console.log("trying to access:", req.path, " with method ", req.method)
     res.send('<h1 style="color:orange">404 – Not Found</h1>');
 });
 

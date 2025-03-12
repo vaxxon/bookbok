@@ -51,6 +51,7 @@ router.post('/login', async(req, res, next) => {
             intro: 'Success!',
             message: `You are now logged in, user.`
         }
+        res.redirect(303, "/")
     } else {
         res.render('users/login', {
             title: 'BookBok / Login',
@@ -61,8 +62,6 @@ router.post('/login', async(req, res, next) => {
             }
         })
     }
-
-    res.redirect(303, '/users')
 })
 
 // logout

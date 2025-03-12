@@ -1,6 +1,9 @@
-const users = [
-    {name: 'Suzanne', email: 'user@bookbok.com', password: encryptPassword('password')}
-]
+const users = [{
+    email:"h@user.com",
+    name:"v",
+    salt:"c5b35da881cff9d48708c7f8995494fe",
+    encryptedPassword:"7d2c5f05f1d5455fe7b9dab1e768e7d273e1a2a96bd740fb7fe5661b34adb268"
+}]
 
 var crypto = require('crypto')
 
@@ -20,6 +23,7 @@ exports.register = (user) => {
         salt: salt,
         encryptedPassword: encryptPassword(user.password, salt)
     }
+    console.log(JSON.stringify(new_user))
     users.push(new_user)
 }
 
