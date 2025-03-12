@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const helpers = require('./helpers')
 
 const User = require('../models/user')
 
@@ -10,10 +11,16 @@ router.get('/', function(req, res, next) {
 
 // registration
 router.get('/register', async(req, res, next) => {
+    if (helpers.isLoggedIn(req, res)) {
+        return
+    }
     res.render('users/register', {title: 'BookBok / Registration'})
 })
 
 router.post('/register', async (req, res, next) => {
+    if (helpers.isLoggedIn(req, res)) {
+        return
+    }
     console.log('body: ' + JSON.stringify(req.body))
     const user = User.getByEmail(req.body.email)
     if (user) {
@@ -38,10 +45,16 @@ router.post('/register', async (req, res, next) => {
 
 // login
 router.get('/login', async (req, res, next) => {
+    if (helpers.isLoggedIn(req, res)) {
+        return
+    }
     res.render('users/login', {title: 'BookBok / Login'})
 })
 
 router.post('/login', async(req, res, next) => {
+    if (helpers.isLoggedIn(req, res)) {
+        return
+    }
     console.log('body: ' + JSON.stringify(req.body))
     const user = User.login(req.body)
     if (user) {
