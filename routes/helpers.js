@@ -10,3 +10,15 @@ exports.isLoggedIn = (req, res) => {
     }
     return false
 }
+
+exports.isNotLoggedIn = (req, res) => {
+    if (!req.session.currentUser) {
+        req.session.flash = {
+            type: 'info',
+            intro: 'Error!',
+            message: 'You are not logged in.'
+        }
+        return true
+    }
+    return false
+}
