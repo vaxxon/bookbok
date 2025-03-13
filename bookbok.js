@@ -6,7 +6,7 @@ const expressSession = require('express-session') // after  cookieParser!
 const { credentials } = require('./config') // import config file. no idea why there are curly braces
 const csrf = require('csurf') // csrf token generator
 const handlebars = require('express-handlebars').create({ // create handlebars object
-    helpers: { // functions you can call in a handlebars tag thing. use Polish notation
+    helpers: { // functions you can call in a handlebars tag thing using Polish notation
       eq: (v1, v2) => v1 == v2,
       ne: (v1, v2) => v1 != v2,
       lt: (v1, v2) => v1 < v2,
