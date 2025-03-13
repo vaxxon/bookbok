@@ -3,6 +3,8 @@ const router = express.Router()
 const helpers = require('./helpers') // bring in functions stored in the helpers function
 
 const User = require('../models/user')
+const Book = require('../models/book')
+const BookUser = require('../models/bookUser')
 
 router.get('/', function(req, res, next) {
     const users = User.all
@@ -77,6 +79,23 @@ router.post('/login', async(req, res, next) => {
             }
         })
     }
+})
+
+// profile
+
+router.get('/profile', async (req, res, next) => {
+    if (helpers.isNotLoggedIn(req, res)) {
+        return
+    }
+    const booksUser = BookUser.allForUser(req.session.currentUser.email)
+    booksUser.forEach((bookUser) => {
+        bookUser.book = Book.get(bookUser.bookId)
+    })
+    res.render('users/profile', {
+        title: 'BookBok / Profile',
+        user: req.session.currentUser,
+        booksUser: booksUser
+    })
 })
 
 // logout
