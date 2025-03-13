@@ -19,7 +19,7 @@ exports.get = (bookId, userEmail) => {
 }
 
 // get all bookUser connections related to a certain user
-exports.AllForUser = (userEmail) => {
+exports.allForUser = (userEmail) => {
     return bookUsers.filter((bookUser) => {
         return bookUser.userEmail == userEmail
     })

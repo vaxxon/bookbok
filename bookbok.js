@@ -32,6 +32,7 @@ const indexRouter = require('./routes/index')
 const authorsRouter = require('./routes/authors')
 const booksRouter = require('./routes/books')
 const genresRouter = require('./routes/genres')
+const booksUsersRouter = require('./routes/booksUsers')
 
 const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
@@ -71,6 +72,7 @@ app.use("/", indexRouter) // route the index page to a view
 app.use("/authors", authorsRouter) // route the authors/ directory to a view
 app.use("/books", booksRouter) // route the books/ directory to a view
 app.use("/genres", genresRouter) // route the genres/ directory to a view
+app.use('/books_users', booksUsersRouter)
 
 // 404 handler
 app.use((req, res) => {

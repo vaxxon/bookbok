@@ -11,7 +11,7 @@
     {{/if}}
     <nav>
       {{#if currentUser}}
-        <h2>Hello, {{currentUser.name}}.</h2>
+        <h2>Hello, <a href="/users/profile">{{currentUser.name}}</a>.</h2>
       {{/if}}
       <ul>
         <li><a href="/">Home</a></li>
