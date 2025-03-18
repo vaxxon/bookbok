@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser') // before expressSession!
 const expressSession = require('express-session') // after  cookieParser!
 const { credentials } = require('./config') // import config file. no idea why there are curly braces
 const csrf = require('csurf') // csrf token generator
+const path = require('path') // add root path to use in bootstrap initiator
 const handlebars = require('express-handlebars').create({ // create handlebars object
     helpers: { // functions you can call in a handlebars tag thing using Polish notation
       eq: (v1, v2) => v1 == v2,
@@ -37,6 +38,7 @@ const booksUsersRouter = require('./routes/booksUsers')
 const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
 app.set('view engine', 'handlebars') // same? idk
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist'))) // bootstrap
 const port = 3000; // add a port, > 1000 so you don't accidentally use a reserved one
 app.use(bodyParser.urlencoded({extended: true})) // parse that body – before the view routers!
 app.use(cookieParser(credentials.cookieSecret))
