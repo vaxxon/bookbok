@@ -8,7 +8,7 @@ const BookUser = require('../models/bookUser')
 
 router.get('/', function(req, res, next) {
     const users = User.all
-    res.render('users/index', {title: 'BookBok / Users', users: users})
+    res.render('users/index', {title: 'Users', users: users})
 })
 
 // registration
@@ -17,7 +17,7 @@ router.get('/register', async(req, res, next) => {
     if (helpers.isLoggedIn(req, res)) { // if the user is logged in, return before rendering
         return
     }
-    res.render('users/register', {title: 'BookBok / Registration'})
+    res.render('users/register', {title: 'Registration'})
 })
 
 router.post('/register', async (req, res, next) => {
@@ -28,7 +28,7 @@ router.post('/register', async (req, res, next) => {
     const user = User.getByEmail(req.body.email)
     if (user) {
         res.render('users/register', {
-            title: 'BookBok / Registration',
+            title: 'Registration',
             flash: {
                 type: 'danger',
                 intro: 'Error!',
@@ -52,7 +52,7 @@ router.get('/login', async (req, res, next) => {
     if (helpers.isLoggedIn(req, res)) {
         return
     }
-    res.render('users/login', {title: 'BookBok / Login'})
+    res.render('users/login', {title: 'Login'})
 })
 
 router.post('/login', async(req, res, next) => {
@@ -71,7 +71,7 @@ router.post('/login', async(req, res, next) => {
         res.redirect(303, "/")
     } else {
         res.render('users/login', {
-            title: 'BookBok / Login',
+            title: 'Login',
             flash: {
                 type: 'danger',
                 intro: 'Error!',
@@ -92,7 +92,7 @@ router.get('/profile', async (req, res, next) => {
         bookUser.book = Book.get(bookUser.bookId)
     })
     res.render('users/profile', {
-        title: 'BookBok / Profile',
+        title: 'Profile',
         user: req.session.currentUser,
         booksUser: booksUser
     })

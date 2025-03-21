@@ -7,12 +7,12 @@ const BookUser = require('../models/bookUser')
 
 router.get('/', function(req, res, next) {
     const books = Book.all
-    res.render('books/index', {title: 'BookBok / Books', books: books})
+    res.render('books/index', {title: 'Books', books: books})
 })
 
 // form submission route
 router.get('/form', async(req, res, next) => {
-    res.render('books/form', {title : 'BookBok / Books', authors: Author.all, genres: Genre.all})
+    res.render('books/form', {title : 'Books', authors: Author.all, genres: Genre.all})
 })
 
 // book creation route
@@ -33,7 +33,7 @@ router.get('/edit', async(req, res, next) => {
     let bookIndex = req.query.id;
     let book = Book.get(bookIndex);
     res.render('books/form', { 
-        title: "BookBok / Edit Book", 
+        title: "Edit Book", 
         book: book, 
         bookIndex: bookIndex, 
         authors: Author.all,
@@ -44,7 +44,7 @@ router.get('/edit', async(req, res, next) => {
 // book detail route
 router.get('/show/:id', async (req, res, next) => {
     let templateVars = {
-        title: "BookBok / Books",
+        title: "Books",
         book: Book.get(req.params.id),
         bookId: req.params.id,
         statuses: BookUser.statuses
