@@ -80,7 +80,7 @@ app.use('/books_users', booksUsersRouter)
 app.use((req, res) => {
     res.status(404);
     console.log("trying to access:", req.path, " with method ", req.method)
-    res.send('<h1 style="color:orange">404 – Not Found</h1>');
+    res.send('<h1 style="color:purple">404 – Not Found</h1>');
 });
 
 // 500 handler
