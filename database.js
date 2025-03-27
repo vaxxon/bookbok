@@ -9,7 +9,7 @@ const camelizeKeys = (obj) => {
     if (!_.isObject(obj)) {
         return obj
     }
-    if (!_.isArray(obj)) {
+    if (_.isArray(obj)) {
         return obj.map(camelizeKeys)
     }
     if (obj instanceof Date) {
