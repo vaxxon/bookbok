@@ -3,14 +3,14 @@ const router = express.Router()
 
 const Author = require('../models/author')
 
-router.get('/', async (req, res, next) => {
-    const authors = await Author.all()
+router.get('/', async(req, res, next) => { // access db asynchronously
+    const authors = await Author.all() // wait until you need to get this info
     res.render('authors/index', {title: 'Authors', authors: authors})
 })
 
 // form submission route
 router.get('/form', async(req, res, next) => {
-    res.render('authors/form', {title : 'Authors'})
+    res.render('authors/form', {title: 'Authors'})
 })
 
 // author creation route
@@ -30,7 +30,7 @@ router.post('/upsert', async(req, res, next) => {
 router.get('/edit', async(req, res, next) => {
     let authorIndex = req.query.id;
     let author = Author.get(authorIndex);
-    res.render('authors/form', { title: "Authors", author: author, authorIndex: authorIndex })
+    res.render('authors/form', {title: "Authors", author: author, authorIndex: authorIndex})
 })
 
 module.exports = router

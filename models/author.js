@@ -7,13 +7,13 @@ const db = require('../database')
 //     {firstName: 'Gregory', lastName: 'Maguire'}
 // ]
 
-exports.all = async () => {
+exports.all = async() => {
     const { rows } = await db.getPool().query("select * from authors order by id")
     return db.camelize(rows)
 }
 
 exports.upsert = (author) => {
-    if(author.id) {
+    if (author.id) {
         exports.update(author)
     } else {
         exports.add(author)
