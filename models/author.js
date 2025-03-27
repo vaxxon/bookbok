@@ -1,11 +1,16 @@
-const authors = [
-    {firstName: 'Suzanne', lastName: 'Clarke'}, 
-    {firstName: 'Robin', lastName: 'Hobb'},
-    {firstName: 'J.R.R.', lastName: 'Tolkien'},
-    {firstName: 'Gregory', lastName: 'Maguire'}
-]
+const db = require('../database')
 
-exports.all = authors
+// const authors = [
+//     {firstName: 'Suzanne', lastName: 'Clarke'}, 
+//     {firstName: 'Robin', lastName: 'Hobb'},
+//     {firstName: 'J.R.R.', lastName: 'Tolkien'},
+//     {firstName: 'Gregory', lastName: 'Maguire'}
+// ]
+
+exports.all = async () => {
+    const { rows } = await db.getPool().query("select * from authors order by id")
+    return db.camelize(rows)
+}
 
 exports.upsert = (author) => {
     if(author.id) {

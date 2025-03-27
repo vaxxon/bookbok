@@ -3,8 +3,8 @@ const router = express.Router()
 
 const Author = require('../models/author')
 
-router.get('/', function(req, res, next) {
-    const authors = Author.all
+router.get('/', async function(req, res, next) {
+    const authors = await Author.all()
     res.render('authors/index', {title: 'Authors', authors: authors})
 })
 
