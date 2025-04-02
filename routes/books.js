@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
+
 const Book = require('../models/book')
 const Author = require('../models/author')
 const Genre = require('../models/genre')
 const BookUser = require('../models/bookUser')
+const Comment = require('../models/comment')
 
 router.get('/', function(req, res, next) {
     const books = Book.all
@@ -12,7 +14,8 @@ router.get('/', function(req, res, next) {
 
 // form submission route
 router.get('/form', async(req, res, next) => {
-    res.render('books/form', {title : 'Books', authors: Author.all, genres: Genre.all})
+    let bookIndex = req.body.id
+    res.render('books/form', {title: 'Books', authors: Author.all, genres: Genre.all, comments: Comment.allForBook(bookIndex)})
 })
 
 // book creation route
@@ -37,7 +40,8 @@ router.get('/edit', async(req, res, next) => {
         book: book, 
         bookIndex: bookIndex, 
         authors: Author.all,
-        genres: Genre.all
+        genres: Genre.all,
+        comments: Comment.allForBook(bookIndex)
     })
 })
 
@@ -49,14 +53,17 @@ router.get('/show/:id', async (req, res, next) => {
         bookId: req.params.id,
         statuses: BookUser.statuses
     }
-    if("authorIds" in templateVars.book) {
-        templateVars['authors'] = templateVars.book.authorIds.map((authorId) => Author.get(authorId))
+    if (templateVars.book.authorIds) {
+        templateVars.authors = templateVars.book.authorIds.map((authorId) => Author.get(authorId))
     }
-    if("genreId" in templateVars.book) {
+    if ("genreId" in templateVars.book) {
         templateVars['genre'] = Genre.get(templateVars.book.genreId)
     }
     if (req.session.currentUser) {
         templateVars['bookUser'] = BookUser.get(req.params.id, req.session.currentUser.email)
+    }
+    if ('commentIds' in templateVars.book) {
+        templateVars['comments'] = templateVars.book.commentIds.map((commentId) => Comment.get(commentId))
     }
     res.render('books/show', templateVars)
 })

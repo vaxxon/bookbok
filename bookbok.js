@@ -1,9 +1,9 @@
 // framework setup
 
-const express = require('express'); // import express
+const express = require('express') // import express
 const cookieParser = require('cookie-parser') // before expressSession!
 const expressSession = require('express-session') // after  cookieParser!
-const { credentials } = require('./config') // import config file. no idea why there are curly braces
+const { credentials } = require('./config') // import config file. idk why there are curly braces
 const csrf = require('csurf') // csrf token generator
 const path = require('path') // add root path to use in bootstrap initiator
 const handlebars = require('express-handlebars').create({ // create handlebars object
@@ -34,6 +34,7 @@ const authorsRouter = require('./routes/authors')
 const booksRouter = require('./routes/books')
 const genresRouter = require('./routes/genres')
 const booksUsersRouter = require('./routes/booksUsers')
+const commentsRouter = require('./routes/comments')
 
 const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
@@ -68,13 +69,13 @@ app.use((req, res, next) => {
 })
 
 // application logic
-
 app.use("/users", usersRouter)
 app.use("/", indexRouter) // route the index page to a view
 app.use("/authors", authorsRouter) // route the authors/ directory to a view
 app.use("/books", booksRouter) // route the books/ directory to a view
 app.use("/genres", genresRouter) // route the genres/ directory to a view
 app.use('/books_users', booksUsersRouter)
+app.use('/comments', commentsRouter)
 
 // 404 handler
 app.use((req, res) => {

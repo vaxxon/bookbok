@@ -1,7 +1,7 @@
 const comments = [
-    {id: '0', bookId: '0', userEmail: 'vallport@pratt.edu', text: 'Wow what a book. Incredible. Two stars.'},
-    {id: '1', bookId: '0', userEmail: 'vallport@pratt.edu', text: 'Actually nevermind this book sucks. Four stars.' },
-    {id: '2', bookId: '0', userEmail: 'vallport@pratt.edu', text: 'I recommended this book to my dad and he tried to fight me. Five stars.'
+    {id: '0', bookId: '0', userEmail: 'h@user.com', text: 'Wow what a book. Incredible. Two stars.'},
+    {id: '1', bookId: '0', userEmail: 'h@user.com', text: 'Actually nevermind this book sucks. Four stars.' },
+    {id: '2', bookId: '0', userEmail: 'h@user.com', text: 'I recommended this book to my dad and he tried to fight me. Five stars.'
     }
 ]
 

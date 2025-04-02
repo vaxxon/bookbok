@@ -7,6 +7,8 @@ const db = require('../database')
 //     {firstName: 'Gregory', lastName: 'Maguire'}
 // ]
 
+// exports.all = authors
+
 exports.all = async() => {
     const { rows } = await db.getPool().query("select * from authors order by id")
     return db.camelize(rows)
@@ -29,5 +31,5 @@ exports.add = (author) => {
 }
 
 exports.get = (i) => {
-    return authors[i];
+    return authors[i]
 }

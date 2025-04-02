@@ -1,0 +1,11 @@
+<form action="/comments/upsert" role="form" method="post">
+    <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+    <div>
+        <h2>Editing comment</h2>
+        <input type="hidden" name="id" value="{{commentIndex}}">
+    </div>
+    <div>
+        <textarea name="comment" id="comment" cols="20" rows="5">{{comment.text}}</textarea>
+    </div>
+    <button type="submit">Submit</button>
+</form>

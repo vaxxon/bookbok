@@ -14,7 +14,7 @@
             <input type="hidden" name="_csrf" value="{{_csrfToken}}">
             <input type="hidden" name="bookId" value="{{bookId}}">
             <input type="hidden" name="userEmail" value="{{currentUser.email}}">
-            <label for="status">Status </label>
+            <label for="status">Status</label>
             <select name="status" id="status">
                 {{#unless (and bookUser bookUser.status)}}
                     <option disabled selected value>-- select a status --</option>
@@ -30,3 +30,20 @@
     </div>
 {{/if}}
 <p><a href="/books/edit?id={{bookId}}">Edit</a></p>
+<h2>Comments</h2>
+{{#if currentUser}}
+    <form action="/comments/upsert" role="form" method="post">
+        <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+        <input type="hidden" name="bookId" value="{{bookId}}">
+        <input type="hidden" name="userEmail" value="{{currentUser.email}}">
+        <textarea name="comment" id="comment" cols="20" rows="5" placeholder="Add your comment here..."></textarea>
+    <button type="submit">Submit</button>
+</form>
+{{/if}}
+{{#each comments}}
+    <p>{{this.text}}</p>
+    <p><i>&mdash; {{this.userEmail}}</i></p>
+    {{#if (eq @root.currentUser.email this.userEmail)}}
+        <p><a href="/comments/edit?id={{this.id}}">Edit</a></p>
+    {{/if}}
+{{/each}}
