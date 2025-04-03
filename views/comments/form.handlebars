@@ -5,7 +5,9 @@
         <input type="hidden" name="id" value="{{commentIndex}}">
     </div>
     <div>
-        <textarea name="comment" id="comment" cols="20" rows="5">{{comment.text}}</textarea>
+        <textarea name="comment" id="comment" cols="20" rows="5">
+            {{comment.text}} <!-- add existing comment to textarea -->
+        </textarea>
     </div>
     <button type="submit">Submit</button>
 </form>

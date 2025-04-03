@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+// connect model to router
 const Comment = require('../models/comment')
 
 // get route for other routers

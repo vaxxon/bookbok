@@ -5,6 +5,7 @@ const comments = [
     }
 ]
 
+// generate serial id
 function getNextId() {
     return Math.max(...comments.map(c => c.id)) + 1
 }

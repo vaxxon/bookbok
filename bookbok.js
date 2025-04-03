@@ -1,11 +1,12 @@
 // framework setup
-
 const express = require('express') // import express
 const cookieParser = require('cookie-parser') // before expressSession!
-const expressSession = require('express-session') // after  cookieParser!
+const expressSession = require('express-session') // after cookieParser!
 const { credentials } = require('./config') // import config file. idk why there are curly braces
 const csrf = require('csurf') // csrf token generator
+
 const path = require('path') // add root path to use in bootstrap initiator
+
 const handlebars = require('express-handlebars').create({ // create handlebars object
     helpers: { // functions you can call in a handlebars tag thing using Polish notation
       eq: (v1, v2) => v1 == v2,
@@ -36,6 +37,7 @@ const genresRouter = require('./routes/genres')
 const booksUsersRouter = require('./routes/booksUsers')
 const commentsRouter = require('./routes/comments')
 
+// initate backendy stuff
 const app = express(); // start express app
 app.engine('handlebars', handlebars.engine) // register express as the template engine
 app.set('view engine', 'handlebars') // same? idk
@@ -77,14 +79,14 @@ app.use("/genres", genresRouter) // route the genres/ directory to a view
 app.use('/books_users', booksUsersRouter)
 app.use('/comments', commentsRouter)
 
-// 404 handler
+// 404 error handler
 app.use((req, res) => {
     res.status(404);
     console.log("trying to access:", req.path, " with method ", req.method)
     res.send('<h1 style="color:purple">404 – Not Found</h1>');
 });
 
-// 500 handler
+// 500 error handler
 app.use((err, req, res, next) => {
     console.error(err.message);
     res.type('text/plain');

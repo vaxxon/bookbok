@@ -8,7 +8,7 @@
     <p>Genre: {{this.genre.genre}}</p> <!-- ...add its name here -->
 {{/if}}
 <p>Originally published in {{book.publishingYear}}</p>
-{{#if currentUser}}
+{{#if currentUser}} <!-- only allow status editing if logged in -->
     <div>
         <form action="/books_users/upsert" method="post">
             <input type="hidden" name="_csrf" value="{{_csrfToken}}">
@@ -31,7 +31,7 @@
 {{/if}}
 <p><a href="/books/edit?id={{bookId}}">Edit</a></p>
 <h2>Comments</h2>
-{{#if currentUser}}
+{{#if currentUser}} <!-- only allow commenting if logged in -->
     <form action="/comments/upsert" role="form" method="post">
         <input type="hidden" name="_csrf" value="{{_csrfToken}}">
         <input type="hidden" name="bookId" value="{{bookId}}">
@@ -40,7 +40,7 @@
     <button type="submit">Submit</button>
 </form>
 {{/if}}
-{{#each comments}}
+{{#each comments}} <!-- does not fetch comments :-( -->
     <p>{{this.text}}</p>
     <p><i>&mdash; {{this.userEmail}}</i></p>
     {{#if (eq @root.currentUser.email this.userEmail)}}
