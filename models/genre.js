@@ -1,15 +1,22 @@
-const genres = [
-    {genre: "fantasy"}, 
-    {genre: "sci-fi"},
-    {genre: "historical fiction"},
-    {genre: "mystery"},
-    {genre: "graphic novel"},
-    {genre: "young adult fiction"},
-    {genre: "superhero slop"},
-    {genre: "nonfiction"}
-]
+const db = require('../database')
 
-exports.all = genres
+// const genres = [
+//     {genre: "fantasy"}, 
+//     {genre: "sci-fi"},
+//     {genre: "historical fiction"},
+//     {genre: "mystery"},
+//     {genre: "graphic novel"},
+//     {genre: "young adult fiction"},
+//     {genre: "superhero slop"},
+//     {genre: "nonfiction"}
+// ]
+
+// exports.all = genres
+
+exports.all = async () => {
+    const { rows } = await db.getPool().query("select * from genres order by id")
+    return db.camelize(rows)
+}
 
 exports.upsert = (genre) => {
     if(genre.id) {
