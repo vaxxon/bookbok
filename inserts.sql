@@ -2,7 +2,7 @@ insert into authors (first_name, last_name) values ('Bret Easton', 'Ellis');
 insert into authors (first_name, last_name) values ('Scott', 'Adams');
 insert into authors (first_name, last_name) values ('J. K.', 'Rowling');
 
-insert into genres (name) values ('childrens literature');
+insert into genres (name) values ('children''s literature');
 insert into genres (name) values ('true crime');
 insert into genres (name) values ('comics');
 
