@@ -1,24 +1,24 @@
 const db = require('../database')
 
-// const genres = [
-//     {genre: "fantasy"}, 
-//     {genre: "sci-fi"},
-//     {genre: "historical fiction"},
-//     {genre: "mystery"},
-//     {genre: "graphic novel"},
-//     {genre: "young adult fiction"},
-//     {genre: "superhero slop"},
-//     {genre: "nonfiction"}
-// ]
-
-// exports.all = genres
-
 exports.all = async () => {
     const { rows } = await db.getPool().query("select * from genres order by id")
     return db.camelize(rows)
 }
 
-exports.upsert = (genre) => {
+exports.get = async (id) => {
+    const { rows } = await db.getPool().query("select * from authors where id = $1", [id])
+    return db.camelize(rows)[0]
+}
+
+exports.add = async (genre) => {
+    return await db.getPool().query("insert into genres (name) values ($1) returning *", [genre.name])
+}
+
+exports.update = async (genre) => {
+    return await db.getPool().query("update genres set name = $1 where id = $2 returning *", [genre.name, genre.id])
+}
+
+exports.upsert = async (genre) => {
     if(genre.id) {
         exports.update(genre)
     } else {
@@ -26,14 +26,30 @@ exports.upsert = (genre) => {
     }
 }
 
-exports.update = (genre) => {
-    genres[genre.id] = genre
-}
+// old methods for genres stored in the model
 
-exports.add = (genre) => {
-    genres.push(genre)
-}
+// const genres = [
+//   * genres *
+// ]
 
-exports.get = (i) => {
-    return genres[i]
-}
+// exports.all = genres
+
+// exports.update = (genre) => {
+//     genres[genre.id] = genre
+// }
+
+// exports.add = (genre) => {
+//     genres.push(genre)
+// }
+
+// exports.get = (i) => {
+//     return genres[i]
+// }
+
+// exports.upsert = (genre) => {
+//     if(genre.id) {
+//         exports.update(genre)
+//     } else {
+//         exports.add(genre)
+//     }
+// }
