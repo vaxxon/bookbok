@@ -29,10 +29,9 @@ router.post('/upsert', async(req, res, next) => {
 })
 
 // author editing route
-router.get('/edit', async(req, res, next) => {
-    let authorIndex = req.query.id;
-    let author = Author.get(authorIndex);
-    res.render('authors/form', {title: "Authors", author: author, authorIndex: authorIndex})
+router.get('/edit', async (req, res, next) => {
+    let author = await Author.get(req.query.id);
+    res.render('authors/form', { title: "Authors", author: author })
 })
 
 // no idea what this does
