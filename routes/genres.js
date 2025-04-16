@@ -29,10 +29,9 @@ router.post('/upsert', async(req, res, next) => {
 })
 
 // genre editing route
-router.get('/edit', async(req, res, next) => {
-    let genreIndex = req.query.id;
-    let genre = Genre.get(genreIndex);
-    res.render('genres/form', { title: "Genres", genre: genre, genreIndex: genreIndex })
+router.get('/edit', async (req, res, next) => {
+    let genre = Genre.get(req.query.id);
+    res.render('genres/form', { title: "Genres", genre: genre })
 })
 
 // no idea what this does frankly

@@ -3,7 +3,7 @@
     {{#if genre}} <!-- if genre exists, use its name -->
         <div>
             <h2>Editing "{{genre.name}}"</h2>
-            <input type="hidden" name="id" value="{{genreIndex}}">
+            <input type="hidden" name="id" value="{{genre.id}}">
         </div>
     {{/if}}
     <div> <!-- create each genre as an li -->
