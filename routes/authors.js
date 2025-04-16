@@ -35,4 +35,5 @@ router.get('/edit', async(req, res, next) => {
     res.render('authors/form', {title: "Authors", author: author, authorIndex: authorIndex})
 })
 
+// no idea what this does
 module.exports = router
