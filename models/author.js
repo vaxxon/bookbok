@@ -1,6 +1,6 @@
 const db = require('../database')
 
-exports.all = async() => {
+exports.all = async () => {
     const { rows } = await db.getPool().query("select * from authors order by id")
     return db.camelize(rows)
 }
@@ -11,7 +11,7 @@ exports.get = async (id) => {
     return db.camelize(rows)[0]
 }
 
-exports.create = async (author) => {
+exports.add = async (author) => {
     return await db.getPool().query("insert into authors (first_name, last_name) values ($1, $2) returning *", [author.firstName, author.lastName])
 }
 
