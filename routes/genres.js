@@ -4,7 +4,7 @@ const router = express.Router()
 // import model to route
 const Genre = require('../models/genre')
 
-// get route for other routers
+// get genres from the db
 router.get('/', async(req, res, next) => {
     const genres = await Genre.all()
     res.render('genres/index', {title: 'Genres', genres: genres})
