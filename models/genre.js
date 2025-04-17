@@ -6,7 +6,7 @@ exports.all = async () => {
 }
 
 exports.get = async (id) => {
-    const { rows } = await db.getPool().query("select * from authors where id = $1", [id])
+    const { rows } = await db.getPool().query("select * from genres where id = $1", [id])
     return db.camelize(rows)[0]
 }
 
@@ -19,7 +19,7 @@ exports.update = async (genre) => {
 }
 
 exports.upsert = async (genre) => {
-    if(genre.id) {
+    if (genre.id) {
         exports.update(genre)
     } else {
         exports.add(genre)

@@ -18,7 +18,7 @@ router.get('/form', async(req, res, next) => {
 // genre creation route
 router.post('/upsert', async(req, res, next) => {
     console.log('body: ' + JSON.stringify(req.body))
-    Genre.upsert(req.body)
+    await Genre.upsert(req.body)
     let createdOrUpdated = req.body.id ? 'updated' : 'created'
     req.session.flash = {
         type: 'info',
@@ -30,7 +30,7 @@ router.post('/upsert', async(req, res, next) => {
 
 // genre editing route
 router.get('/edit', async (req, res, next) => {
-    let genre = Genre.get(req.query.id);
+    let genre = await Genre.get(req.query.id);
     res.render('genres/form', { title: "Genres", genre: genre })
 })
 

@@ -18,7 +18,7 @@ router.get('/form', async(req, res, next) => {
 // author creation/update
 router.post('/upsert', async(req, res, next) => {
     console.log('body: ' + JSON.stringify(req.body))
-    Author.upsert(req.body)
+    await Author.upsert(req.body)
     let createdOrUpdated = req.body.id ? 'updated' : 'created'
     req.session.flash = {
         type: 'info',
