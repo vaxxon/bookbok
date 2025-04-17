@@ -5,6 +5,7 @@ exports.all = async () => {
     return db.camelize(rows)
 }
 
+// add check that there really is a row to return
 exports.get = async (id) => {
     const { rows } = await db.getPool().query("select * from genres where id = $1", [id])
     return db.camelize(rows)[0]
