@@ -16,6 +16,9 @@ const encryptPassword = (password, salt) => {
 }
 
 exports.register = (user) => {
+    if (exports.getByEmail(user.email)) {
+        return false
+    }
     let salt = createSalt()
     let new_user = {
         email: user.email,
