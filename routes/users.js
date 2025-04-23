@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 
 // registration
 
-router.get('/register', async(req, res, next) => {
+router.get('/register', async (req, res, next) => {
     if (helpers.isLoggedIn(req, res)) { // if the user is logged in, return before rendering
         return
     }
@@ -25,7 +25,7 @@ router.post('/register', async (req, res, next) => {
         return
     }
     // console.log('body: ' + JSON.stringify(req.body))
-    const user = User.getByEmail(req.body.email)
+    const user = await User.getByEmail(req.body.email)
     if (user) {
         res.render('users/register', {
             title: 'Registration',
@@ -36,7 +36,7 @@ router.post('/register', async (req, res, next) => {
             }
         })
     } else {
-        User.register(req.body)
+        await User.register(req.body)
         req.session.flash = {
             type: 'info',
             intro: 'Success!',
@@ -60,7 +60,7 @@ router.post('/login', async(req, res, next) => {
         return
     }
     // console.log('body: ' + JSON.stringify(req.body))
-    const user = User.login(req.body)
+    const user = await User.login(req.body)
     if (user) {
         req.session.currentUser = user
         req.session.flash = {
@@ -111,7 +111,7 @@ router.post('/logout', async (req, res, next) => {
 })
 
 // user editing route
-router.get('/edit', async(req, res, next) => {
+router.get('/edit', async (req, res, next) => {
     let userIndex = req.query.id;
     let user = User.get(userIndex);
     res.render('users/form', { title: "BookBok / users", user: user, userIndex: userIndex })

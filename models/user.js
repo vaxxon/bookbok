@@ -1,10 +1,4 @@
-const users = [{
-    email:"h@user.com",
-    name:"v",
-    salt:"c5b35da881cff9d48708c7f8995494fe",
-    encryptedPassword:"7d2c5f05f1d5455fe7b9dab1e768e7d273e1a2a96bd740fb7fe5661b34adb268"
-}]
-
+const db = require('../database')
 var crypto = require('crypto')
 
 const createSalt = () => {
@@ -15,46 +9,28 @@ const encryptPassword = (password, salt) => {
     return crypto.pbkdf2Sync(password, salt, 310000, 32, 'sha256').toString('hex')
 }
 
-exports.register = (user) => {
-    if (exports.getByEmail(user.email)) {
+exports.register = async (user) => {
+    if (await exports.getByEmail(user.email)) {
         return false
     }
     let salt = createSalt()
-    let new_user = {
-        email: user.email,
-        name: user.name,
-        salt: salt,
-        encryptedPassword: encryptPassword(user.password, salt)
-    }
-    // console.log(JSON.stringify(new_user))
-    users.push(new_user)
+    let encryptedPassword = encryptPassword(user.password, salt)
+    return db.getPool().query("insert into users (email, name, salt, password) values ($1, $2, $3, $4) returning *", [user.email, user.name, salt, encryptedPassword])
 }
 
-exports.getByEmail = (email) => {
-    return users.find((user) => user.email === email)
+exports.getByEmail = async (email) => {
+    const { rows } = await db.getPool().query("select * from users where email = $1", [email])
+    return db.camelize(rows)[0]
 }
 
-// exports.register = (user) => {
-//     if (exports.getByEmail(user.email)) {
-//         return false
-//     }
-//     users.push(user)
-// }
-
-exports.login = (login) => {
-    let user = exports.getByEmail(login.email)
+exports.login = async (login) => {
+    let user = await exports.getByEmail(login.email)
     if (!user) {
         return null
     }
     let encryptedPassword = encryptPassword(login.password, user.salt)
-    if (user.encryptedPassword === encryptedPassword) {
+    if (user.password === encryptedPassword) {
         return user
     }
     return null
 }
-
-exports.get = (i) => {
-    return users[i];
-}
-
-exports.all = users
