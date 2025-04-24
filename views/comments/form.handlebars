@@ -2,12 +2,12 @@
     <input type="hidden" name="_csrf" value="{{_csrfToken}}">
     <div>
         <h2>Editing comment</h2>
-        <input type="hidden" name="id" value="{{commentIndex}}">
+        <input type="hidden" name="id" value="{{comment.id}}">
     </div>
     <div>
         <textarea name="comment" id="comment" cols="20" rows="5">
-            {{comment.text}} <!-- add existing comment to textarea -->
+            {{comment.comment}} <!-- add existing comment to textarea -->
         </textarea>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
