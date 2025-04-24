@@ -3,7 +3,7 @@
 {{#if book}}
     <div>
         <h2>Editing "{{book.title}}"</h2>
-        <input type="hidden" name="id" value="{{bookIndex}}">
+        <input type="hidden" name="id" value="{{book.id}}">
     </div>
 {{/if}}
     <div>
@@ -23,7 +23,7 @@
         <select name="authorIds" id="authorIds" multiple>
             <option disabled selected value>-- select author(s) --</option>
             {{#each authors}}
-                <option value="{{@index}}" {{#if (and @root.book (in @root.book.authorIds @index))}}selected{{/if}}>
+                <option value="{{this.id}}" {{#if (and @root.book (in @root.book.authorIds this.id))}}selected{{/if}}>
                     {{this.firstName}} {{this.lastName}}
                 </option>
             {{/each}}
@@ -34,7 +34,7 @@
         <select name="genreId" id="genreId">
             <option disabled selected value>-- select a genre --</option>
             {{#each genres}}
-                <option value="{{@index}}" {{#if (and @root.book (eq @index @root.book.genreId))}}selected{{/if}}>{{this.genre}}</option>
+                <option value="{{this.id}}" {{#if (and @root.book (eq this.id @root.book.genreId))}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
         </select>
     </div>

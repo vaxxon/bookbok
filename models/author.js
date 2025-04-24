@@ -27,6 +27,11 @@ exports.upsert = async (author) => {
     }
 }
 
+exports.allForBook = async (book) => {
+    const { rows } = await db.getPool().query("select authors.* from authors join books_authors on books_authors.author_id = authors.id where books_authors.book_id = $1;", [book.id])
+    return db.camelize(rows)
+}
+
 // old methods for authors stored in the model
 
 // const authors = [

@@ -1,31 +1,47 @@
-const books = [ // remove manually added comments at some point
-    {title: 'Piranesi', publishingYear: 2020, commentIds: [0, 1, 2]},
-    {title: 'Ship of Magic', publishingYear: 1998, genreId: 5},
-    {title: 'The Lord of the Rings', publishingYear: 1954},
-    {title: 'Wicked', publishingYear: 1995}
-]
+const db = require('../database')
 
-exports.all = books
+exports.all = async () => {
+    const { rows } = await db.getPool().query("select * from books order by id")
+    return db.camelize(rows)
+}
 
-exports.upsert = (book) => {
-    if(book.authorIds && !Array.isArray(book.authorIds)) {
+exports.add = async (book) => {
+    const { rows } = await db.getPool().query("insert into books (title, publishing_year, genre_id) values ($1, $2, $3) returning *", [book.title, book.publishingYear, book.genreId])
+    let newBook = db.camelize(rows)[0]
+    await addAuthorsToBook(newBook, book.authorIds)
+    return newBook
+}
+
+exports.get = async (id) => {
+    const { rows } = await db.getPool().query("select * from books where id = $1", [id])
+    return db.camelize(rows)[0]
+}
+
+exports.update = async (book) => {
+    const { rows } = await db.getPool().query("update books set title = $1, publishing_year = $2, genre_id = $3 where id = $4 returning *", [book.title, book.publishingYear, book.genreId, book.id])
+    let newBook = db.camelize(rows)[0]
+    await deleteAuthorsForBook(newBook)
+    await addAuthorsToBook(newBook, book.authorIds)
+    return newBook
+}
+
+exports.upsert = async (book) => {
+    if (book.authorIds && !Array.isArray(book.authorIds)) {
         book.authorIds = [book.authorIds]
     }
-    if(book.id) {
+    if (book.id) {
         exports.update(book)
     } else {
         exports.add(book)
     }
 }
 
-exports.update = (book) => {
-    books[book.id] = book
+const addAuthorsToBook = async (book, authorIds) => {
+    authorIds.forEach(async (authorId) => {
+        await db.getPool().query("insert into books_authors (author_id, book_id) values ($1, $2)", [authorId, book.id])
+    });
 }
 
-exports.add = (book) => {
-    books.push(book)
-}
-
-exports.get = (i) => {
-    return books[i]
+const deleteAuthorsForBook = async (book) => {
+    db.getPool().query("delete from books_authors where book_id = $1", [book.id])
 }
