@@ -38,15 +38,16 @@
     <form action="/comments/upsert" role="form" method="post">
         <input type="hidden" name="_csrf" value="{{_csrfToken}}">
         <input type="hidden" name="bookId" value="{{book.id}}">
-        <input type="hidden" name="userEmail" value="{{currentUser.email}}">
-        <textarea name="comment" id="comment" cols="20" rows="5" placeholder="Add your comment here..."></textarea>
+        <input type="hidden" name="userId" value="{{currentUser.id}}">
+        <textarea name="comment" id="comment" cols="20" rows="5" placeholder="Add your comment here...">{{comment.comment}}</textarea>
     <button type="submit">Submit</button>
 </form>
 {{/if}}
 {{#each comments}} <!-- does not fetch comments :-( -->
-    <p>{{this.text}}</p>
-    <p><i>&mdash; {{this.userEmail}}</i></p>
-    {{#if (eq @root.currentUser.email this.userEmail)}}
-        <p><a href="/comments/edit?id={{this.id}}">Edit</a></p>
+    <p>{{this.comment}}</p>
+    <p><i>&mdash; {{this.userEmail}}</i>
+    {{#if (eq @root.currentUser.id this.id)}}
+        <span>  &mdash; <a href="/comments/edit?id={{this.id}}">Edit</a></span>
     {{/if}}
+    </p>
 {{/each}}

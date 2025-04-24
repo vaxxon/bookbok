@@ -14,8 +14,7 @@ router.get('/', async (req, res, next) => {
 
 // form submission route
 router.get('/form', async (req, res, next) => {
-    let bookIndex = req.body.id
-    res.render('books/form', {title: 'Books', authors: await Author.all(), genres: await Genre.all(), comments: Comment.allForBook(bookIndex)})
+    res.render('books/form', {title: 'Books', authors: await Author.all(), genres: await Genre.all()})
 })
 
 // book creation route
@@ -40,29 +39,29 @@ router.get('/edit', async (req, res, next) => {
         title: "Edit Book", 
         book: book, 
         authors: await Author.all(),
-        genres: await Genre.all(),
-        comments: Comment.allForBook(bookId)
+        genres: await Genre.all()
     })
 })
 
 // book detail route
 router.get('/show/:id', async (req, res, next) => {
+    const book = await Book.get(req.params.id)
     let templateVars = {
         title: "Books",
-        book: await Book.get(req.params.id),
+        book: book,
         bookId: req.params.id,
         statuses: BookUser.statuses,
         comments: await Comment.allForBook(req.params.id)
     }
-    templateVars.book.authors = await Author.allForBook(templateVars.book)
-    if ("genreId" in templateVars.book) {
-        templateVars['genre'] = await Genre.get(templateVars.book.genreId)
+    book.authors = await Author.allForBook(book)
+    if ("genreId" in book) {
+        templateVars['genre'] = await Genre.get(book.genreId)
     }
     if (req.session.currentUser) {
-        templateVars['bookUser'] = await BookUser.get(templateVars.book, req.session.currentUser)
+        templateVars['bookUser'] = await BookUser.get(book, req.session.currentUser)
     }
-    if ('commentIds' in templateVars.book) {
-        templateVars['comments'] = templateVars.book.commentIds.map((commentId) => Comment.get(commentId))
+    if ('commentIds' in book) {
+        templateVars['comments'] = await Comment.allForBook(book)
     }
     res.render('books/show', templateVars)
 })
