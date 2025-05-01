@@ -18,9 +18,8 @@ function notAuthorized(req, res, returnUrl) {
 // comment creation/update
 router.post('/upsert', async (req, res, next) => {
     let comment = await Comment.get(req.body.id)
-    let redirect = `/books/show/${comment.bookId}` // redirect back to the book's page. make sure to use absolute path
-    if (req.session.currentUser.id != comment.userId) {
-        return notAuthorized(req, res, redirect)
+    if (comment && req.session.currentUser.id != comment.userId) {
+        return notAuthorized(req, res, `/books/show/${comment.bookId}`)
     }
     await Comment.upsert(req.body)
     let createdOrUpdated = req.body.id ? 'updated' : 'created'
@@ -29,7 +28,7 @@ router.post('/upsert', async (req, res, next) => {
         intro: 'Success!',
         message: `Your comment has been ${createdOrUpdated}.`
     }
-    res.redirect(303, redirect)
+    res.redirect(303, `/books/show/${comment.bookId}`)
 })
 
 // comment editing route

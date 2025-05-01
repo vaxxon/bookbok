@@ -21,7 +21,7 @@ exports.allForUser = async (user) => {
 
 // add a new bookUser relationship
 exports.add = async (bookUser) => {
-    return db.getPool().query("insert into books_users (book_id, user_id, status) values ($1, $2, $3) returning *)", [bookUser.bookId, bookUser.userId, bookUser.status])
+    return db.getPool().query("insert into books_users (book_id, user_id, status) values ($1, $2, $3) returning *", [bookUser.bookId, bookUser.userId, bookUser.status])
 }
 
 // update an existing bookUser relationship
@@ -31,7 +31,7 @@ exports.update = async (bookUser) => {
 
 // we also have upsert? should I deprecate the above? idk
 // oh right we need the above to enable this on the form lolllll
-exports.upsert = (bookUser) => {
+exports.upsert = async (bookUser) => {
     if (bookUser.id) {
         return exports.update(bookUser)
     } else {
