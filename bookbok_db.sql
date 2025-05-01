@@ -1,8 +1,8 @@
-drop database if exists bookbok_db;
+-- drop database if exists bookbok_db;
 
-create database bookbok_db;
+-- create database bookbok;
 
-\c bookbok_db
+-- \c bookbok
 
 CREATE TABLE "books" (
   "id" serial,
