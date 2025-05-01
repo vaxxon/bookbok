@@ -28,7 +28,7 @@ router.post('/upsert', async (req, res, next) => {
         intro: 'Success!',
         message: `Your comment has been ${createdOrUpdated}.`
     }
-    res.redirect(303, `/books/show/${comment.bookId}`)
+    res.redirect(303, `/books/show/${req.body.bookId}`)
 })
 
 // comment editing route
