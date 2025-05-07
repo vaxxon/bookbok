@@ -1,7 +1,7 @@
 const db = require('../database')
 
 exports.add = async (comment) => {
-    return await db.getPool().query("insert into comments (comment, user_id, book_id, created_at) values ($1, $2, $3, CURRENT_TIMESTAMP) returning *", [comment.comment, comment.userId, comment.bookId])
+    return await db.getPool().query("insert into comments (comment, user_id, book_id, created) values ($1, $2, $3, CURRENT_TIMESTAMP) returning *", [comment.comment, comment.userId, comment.bookId])
 }
 
 exports.update = async (comment) => {
