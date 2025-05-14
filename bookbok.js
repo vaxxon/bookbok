@@ -76,7 +76,7 @@ app.use("/", indexRouter) // route the index page to a view
 app.use("/authors", authorsRouter) // route the authors/ directory to a view
 app.use("/books", booksRouter) // route the books/ directory to a view
 app.use("/genres", genresRouter) // route the genres/ directory to a view
-app.use('/books_users', booksUsersRouter)
+app.use('/booksUsers', booksUsersRouter)
 app.use('/comments', commentsRouter)
 
 // 404 error handler
